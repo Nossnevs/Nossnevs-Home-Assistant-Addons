@@ -24,7 +24,7 @@ RUN apk add --no-cache autossh openssh \
     --uid "$TUNNEL_USER_ID" \
     "$TUNNEL_USER" \
     && chmod a+x /run.sh \
-    && chmod 600 "/home/$TUNNEL_USER/.ssh/id_rsa"* \
+    && mkdir -p /home/$TUNNEL_USER/.ssh/ \
     && chown -R "$TUNNEL_USER" "/home/$TUNNEL_USER/" \
     && chown "$TUNNEL_USER" /run.sh
 
