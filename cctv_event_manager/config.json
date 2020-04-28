@@ -1,0 +1,23 @@
+{
+  "name": "CCTV event manager",
+  "version": "0.1.0",
+  "slug": "cctv_event_manager",
+  "description": "This addon manages events created by motioneye.",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "initialize",
+  "boot": "auto",
+  "panel_admin": true,
+  "stage": "experimental",
+  "map": ["share:rw"],
+  "ingress": true,
+  "ingress_port": 8089,
+  "webui": "http://[HOST]:[PORT:8089]",
+  "options": {
+    "media_folder": "share/motioneye/Camera1",
+    "allowed_hosts": ["example.com", "192.168.0.2"]
+  },
+  "schema": {
+    "media_folder": "str",
+    "allowed_hosts": ["str"]
+  }
+}
