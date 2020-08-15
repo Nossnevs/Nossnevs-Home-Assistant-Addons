@@ -1,7 +1,7 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN apk add --no-cache npm python3 python3-dev \
+RUN apk add --no-cache npm python3 py3-pip python3-dev \
     ca-certificates gcc postgresql-dev linux-headers musl-dev \
     libffi-dev jpeg-dev zlib-dev \
     && pip3 install --upgrade pip
