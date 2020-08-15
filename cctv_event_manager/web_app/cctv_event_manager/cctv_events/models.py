@@ -20,7 +20,8 @@ class Event(models.Model):
         path = os.path.join(settings.MEDIA_ROOT, self.dir_name)
         if not (self.dir_name and settings.MEDIA_ROOT and path != "/" and path != settings.MEDIA_ROOT):
             raise HttpResponseBadRequest
-        shutil.rmtree(os.path.join(settings.MEDIA_ROOT, self.dir_name))
+        if os.path.exists(path):
+            shutil.rmtree(path)
         self.deleted_at = timezone.now()
         self.save()
 
