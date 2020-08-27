@@ -33,6 +33,14 @@ class ImageViewSet(
     queryset = Image.objects.all().order_by('-creation_date')
     serializer_class = ImagesSerializer
 
+class DeleteAllEvents(APIView):
+    def get(self, request):
+        self.deleteAll()
+
+    def deleteAll(self):
+        allEvents = Event.objects.filter(deleted_at__isnull=True).order_by('-creation_date')
+        for event in allEvents:
+            event.delete()
 
 class SyncEventFiles(APIView):
 
