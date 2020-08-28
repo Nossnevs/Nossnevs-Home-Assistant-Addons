@@ -30,6 +30,18 @@ export const deleteEvent = (id) => (dispatch, getState) => {
     .catch((err) => console.log(err));
 };
 
+
+// DELETE ALL EVENTS
+export const deleteAllEvents = () => (dispatch, getState) => {
+  axios
+    .get(EXTERNAL_BASE_URL + "api/events/delete_all")
+    .then((res) => {
+      dispatch(getEvents());
+    })
+    .catch((err) => console.log(err.response.data, err.response.status));
+};
+
+
 // SYNC EVENTS
 export const syncEvents = () => (dispatch, getState) => {
   axios

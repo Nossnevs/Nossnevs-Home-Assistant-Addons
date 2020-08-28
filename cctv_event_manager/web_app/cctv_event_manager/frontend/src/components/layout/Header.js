@@ -22,6 +22,17 @@ const Header = (props) => {
             <span className="material-icons">sync</span>
           </button>
         </div>
+        <div className="col-2 ml-auto">
+          <button
+            type="button"
+            name="deleteAll"
+            id=""
+            className="btn btn-danger btn-lg btn-block"
+            onClick={() => dispatch(deleteAllEvents())}
+          >
+            <span className="material-icons">delete_sweep</span>
+          </button>
+        </div>
       </div>
     </div>
   );

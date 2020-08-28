@@ -36,6 +36,7 @@ class ImageViewSet(
 class DeleteAllEvents(APIView):
     def get(self, request):
         self.deleteAll()
+        return HttpResponse("Done")
 
     def deleteAll(self):
         allEvents = Event.objects.filter(deleted_at__isnull=True).order_by('-creation_date')
