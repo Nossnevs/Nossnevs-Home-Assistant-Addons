@@ -1,6 +1,6 @@
 {
   "name": "CCTV event manager",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "slug": "cctv_event_manager",
   "description": "This addon manages events created by motioneye.",
   "arch": ["armv7", "amd64"],
