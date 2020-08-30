@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { syncEvents } from "../../actions/events";
+import { syncEvents, deleteAllEvents } from "../../actions/events";
 import { useDispatch } from "react-redux";
 
 const Header = (props) => {
