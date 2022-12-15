@@ -33,4 +33,4 @@ RUN apk add --no-cache autossh openssh \
 
 
 #USER ${TUNNEL_USER}
-CMD [ "/bin/bash", "-c", "/run.sh" ]
+ENTRYPOINT ["./run.sh"]
