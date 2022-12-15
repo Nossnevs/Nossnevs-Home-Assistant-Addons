@@ -3,6 +3,7 @@ CONFIG_PATH=/data/options.json
 
 PROXY_HOSTNAME="$(jq --raw-output '.proxy.hostname' $CONFIG_PATH)"
 PROXY_USER="$(jq --raw-output '.proxy.user' $CONFIG_PATH)"
+PROXY_HA_IP="$(jq --raw-output '.proxy.ha_ip' $CONFIG_PATH)"
 PROXY_HA_PORT="$(jq --raw-output '.proxy.ha_port' $CONFIG_PATH)"
 PROXY_INTERNAL_PORT="$(jq --raw-output '.proxy.internal_port' $CONFIG_PATH)"
 TUNNEL_USER="tun-user"
@@ -26,4 +27,4 @@ echo "Starting sshd"
 echo "Adding $PROXY_HOSTNAME to knownhosts"
 su $TUNNEL_USER -c bash -c "ssh-keyscan -H $PROXY_HOSTNAME >> ~/.ssh/known_hosts"
 echo "Starting Autossh"
-su $TUNNEL_USER -c bash -c "cd; /usr/bin/autossh -M 0 -o 'ServerAliveInterval 30' -o 'ServerAliveCountMax 3' -NR 172.17.0.1:$PROXY_INTERNAL_PORT:172.17.0.1:$PROXY_HA_PORT $PROXY_USER@$PROXY_HOSTNAME -i ~/.ssh/id_rsa"
+su $TUNNEL_USER -c bash -c "cd; /usr/bin/autossh -M 0 -o 'ServerAliveInterval 30' -o 'ServerAliveCountMax 3' -NR 172.17.0.1:$PROXY_INTERNAL_PORT:$PROXY_HA_IP:$PROXY_HA_PORT $PROXY_USER@$PROXY_HOSTNAME -i ~/.ssh/id_rsa"

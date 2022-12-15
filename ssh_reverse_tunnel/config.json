@@ -14,6 +14,7 @@
       "hostname": "example.com",
       "user": "ubuntu",
       "ha_port": 8123,
+      "ha_ip": "172.17.0.1",
       "internal_port": 23000
     }
   },
@@ -22,6 +23,7 @@
       "hostname": "str",
       "user": "str",
       "ha_port": "int(,65000)",
+      "ha_ip": "str",
       "internal_port": "int(,65000)"
     }
   }
