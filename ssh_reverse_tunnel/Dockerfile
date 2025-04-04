@@ -13,7 +13,9 @@ ENV TUNNEL_USER="tun-user"
 ENV TUNNEL_USER_ID="2000"
 ENV TUNNEL_USER_GRP_ID="2001"
 COPY rootfs /
-RUN apk add --no-cache autossh openssh \
+RUN apk add --no-cache \
+    autossh=1.4g-r3 \
+    openssh=9.9_p2-r0 \
     && ssh-keygen -A \
     && sed -i "s/ash/bash/" /etc/passwd \
     && addgroup --gid "$TUNNEL_USER_GRP_ID" "$TUNNEL_USER" \
