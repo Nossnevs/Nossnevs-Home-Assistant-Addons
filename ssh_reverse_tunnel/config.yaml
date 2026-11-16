@@ -1,5 +1,5 @@
 name: "SSH Reverse tunnel"
-version: "0.5.0"
+version: "0.5.1"
 slug: "ssh_reverse_tunnel"
 description: "This addon setup and uses ssh reverse tunnel as proxy to home assistant. This can be used together with a instance on AWS with nginx to be a complement to Nabucasa for more expert users"
 url: "https://github.com/nossnevs/nossnevs-home-assistant-addons/tree/master/ssh_reverse_tunnel"

@@ -1,4 +1,7 @@
 # Changelog
+## 0.5.1
+
+- Fixes "cannot open pid file "autossh.pid": Permission denied"
 
 ## 0.5.0
 - Updated to latest Home Assistant standards (HAOS 2024–2026)

@@ -6,7 +6,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Environment variables
 ENV \
-    AUTOSSH_PIDDIR="/var/run/" \
+    AUTOSSH_PIDDIR="/home/tun-user" \
     AUTOSSH_PIDFILE="autossh.pid" \
     AUTOSSH_POLL=60 \
     AUTOSSH_FIRST_POLL=30 \

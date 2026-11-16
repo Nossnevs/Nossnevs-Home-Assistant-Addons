@@ -30,6 +30,11 @@ main() {
     bashio::log.info "Starting SSH Reverse Tunnel to ${user}@${hostname}:${ssh_port}"
     bashio::log.info "Forwarding ${remote_bind_address}:${internal_port} on ${hostname} to ${ha_ip}:${ha_port}"
 
+    export HOME="/home/${TUNNEL_USER}"
+    export USER="${TUNNEL_USER}"
+    export AUTOSSH_PIDDIR="/home/${TUNNEL_USER}"
+    cd "${HOME}"
+
     exec s6-setuidgid "${TUNNEL_USER}" /usr/bin/autossh -M 0 \
         -o "ServerAliveInterval 30" \
         -o "ServerAliveCountMax 3" \
