@@ -1,38 +1,38 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/home-assistant/base:latest
 FROM $BUILD_FROM
+
+# Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-ENV AUTOSSH_PIDDIR="/var/run/" \
+
+# Environment variables
+ENV \
+    AUTOSSH_PIDDIR="/var/run/" \
     AUTOSSH_PIDFILE="autossh.pid" \
     AUTOSSH_POLL=60 \
     AUTOSSH_FIRST_POLL=30 \
     AUTOSSH_GATETIME=0 \
     AUTOSSH_DEBUG=1 \
-    AUTOSSH_USER="tun-user"
-ENV LANG C.UTF-8
-ENV TUNNEL_USER="tun-user"
-ENV TUNNEL_USER_ID="2000"
-ENV TUNNEL_USER_GRP_ID="2001"
-COPY rootfs /
+    TUNNEL_USER="tun-user" \
+    TUNNEL_USER_ID="2000" \
+    TUNNEL_USER_GRP_ID="2001"
+
+# Install dependencies
 RUN apk add --no-cache \
-    autossh=1.4g-r3 \
-    openssh=9.9_p2-r0 \
-    && ssh-keygen -A \
-    && sed -i "s/ash/bash/" /etc/passwd \
+    autossh \
+    openssh-client \
     && addgroup --gid "$TUNNEL_USER_GRP_ID" "$TUNNEL_USER" \
     && adduser \
     --disabled-password \
     --gecos "" \
+    --home "/home/$TUNNEL_USER" \
     --ingroup "$TUNNEL_USER" \
     --uid "$TUNNEL_USER_ID" \
     "$TUNNEL_USER" \
-    && chmod a+x /run.sh \
-    && mkdir -p /home/$TUNNEL_USER/.ssh/ \
-    && chown -R "$TUNNEL_USER" "/home/$TUNNEL_USER/" \
-    && chown "$TUNNEL_USER" /run.sh
+    && sed -i "s/ash/bash/" /etc/passwd
 
-   
-# Copy data for add-on
+# Copy root filesystem
+COPY rootfs /
 
-
-#USER ${TUNNEL_USER}
-ENTRYPOINT ["./run.sh"]
+# Set permissions
+RUN chmod a+x /etc/cont-init.d/* \
+    && chmod a+x /etc/services.d/*/run

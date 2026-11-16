@@ -1,0 +1,9 @@
+**/.git
+**/.gitignore
+**/id_*
+**/.ssh
+sync.sh
+GEMINI.md
+README.md
+DOCS.md
+CHANGELOG.md

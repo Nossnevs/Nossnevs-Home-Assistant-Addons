@@ -1,0 +1,43 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Home Assistant Add-on: SSH Reverse Tunnel
+# Service: autossh
+# ==============================================================================
+set -e
+
+readonly TUNNEL_USER="tun-user"
+
+main() {
+    local hostname
+    local user
+    local ha_ip
+    local ha_port
+    local internal_port
+    local remote_bind_address
+    local ssh_port
+
+    hostname=$(bashio::config 'proxy.hostname')
+    user=$(bashio::config 'proxy.user')
+    ha_ip=$(bashio::config 'proxy.ha_ip' '172.30.32.1')
+    ha_port=$(bashio::config 'proxy.ha_port' '8123')
+    internal_port=$(bashio::config 'proxy.internal_port' '23000')
+    remote_bind_address=$(bashio::config 'proxy.remote_bind_address' '172.17.0.1')
+    ssh_port="22"
+    if bashio::config.has_value 'proxy.ssh_port'; then
+        ssh_port=$(bashio::config 'proxy.ssh_port')
+    fi
+
+    bashio::log.info "Starting SSH Reverse Tunnel to ${user}@${hostname}:${ssh_port}"
+    bashio::log.info "Forwarding ${remote_bind_address}:${internal_port} on ${hostname} to ${ha_ip}:${ha_port}"
+
+    exec s6-setuidgid "${TUNNEL_USER}" /usr/bin/autossh -M 0 \
+        -o "ServerAliveInterval 30" \
+        -o "ServerAliveCountMax 3" \
+        -o "ExitOnForwardFailure yes" \
+        -o "StrictHostKeyChecking yes" \
+        -p "${ssh_port}" \
+        -NR "${remote_bind_address}:${internal_port}:${ha_ip}:${ha_port}" \
+        "${user}@${hostname}"
+}
+
+main "$@"
